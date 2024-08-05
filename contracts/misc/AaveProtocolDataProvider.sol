@@ -125,7 +125,7 @@ contract AaveProtocolDataProvider is IPoolDataProvider {
 
   /// @inheritdoc IPoolDataProvider
   function getSiloedBorrowing(address asset) external view override returns (bool) {
-    return IPool(ADDRESSES_PROVIDER.getPool()).getConfiguration(asset).getSiloedBorrowing();
+    return false;
   }
 
   /// @inheritdoc IPoolDataProvider

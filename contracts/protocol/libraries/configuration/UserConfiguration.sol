@@ -177,15 +177,6 @@ library UserConfiguration {
     mapping(address => DataTypes.ReserveData) storage reservesData,
     mapping(uint256 => address) storage reservesList
   ) internal view returns (bool, address, uint256) {
-    if (isUsingAsCollateralOne(self)) {
-      uint256 assetId = _getFirstAssetIdByMask(self, COLLATERAL_MASK);
-
-      address assetAddress = reservesList[assetId];
-      uint256 ceiling = reservesData[assetAddress].configuration.getDebtCeiling();
-      if (ceiling != 0) {
-        return (true, assetAddress, ceiling);
-      }
-    }
     return (false, address(0), 0);
   }
 
@@ -202,14 +193,6 @@ library UserConfiguration {
     mapping(address => DataTypes.ReserveData) storage reservesData,
     mapping(uint256 => address) storage reservesList
   ) internal view returns (bool, address) {
-    if (isBorrowingOne(self)) {
-      uint256 assetId = _getFirstAssetIdByMask(self, BORROWING_MASK);
-      address assetAddress = reservesList[assetId];
-      if (reservesData[assetAddress].configuration.getSiloedBorrowing()) {
-        return (true, assetAddress);
-      }
-    }
-
     return (false, address(0));
   }
 
