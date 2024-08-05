@@ -33,7 +33,7 @@
     "prepublish": "npm run compile && npm run build"
   },
   "devDependencies": {
-    "@aave/deploy-v3": "1.56.1",
+    "@aave/deploy-v3": "git+https://github.com/IntersectLabs/intersect-deploy",
     "@aave/periphery-v3": "2.5.1",
     "@ethersproject/bignumber": "^5.6.2",
     "@nomicfoundation/hardhat-chai-matchers": "1.0.5",
