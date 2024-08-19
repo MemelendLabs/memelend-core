@@ -1,4 +1,5 @@
-pragma solidity 0.8.19;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
 
 // depending on the requirement, you may build one or more data structures given below.
 

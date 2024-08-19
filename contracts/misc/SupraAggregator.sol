@@ -37,51 +37,54 @@ contract SupraAggregator is Ownable, AggregatorInterface {
     tokenPair = _tokenPair;
   }
 
+  /// @notice Get latest answer for the asset returned in market BASE CURRENCY
   function latestAnswer() external view returns (int256) {
     ISupraSValueFeed.priceFeed memory priceFeed = supraOracle.getSvalue(assetPriceIndex);
     return SafeCast.toInt256(convertToUsd(priceFeed.price, decimals));
   }
 
+  /// @notice Get latest timestamp for the asset
   function latestTimestamp() external view returns (uint256) {
     return supraOracle.getTimestamp(assetPriceIndex);
   }
 
+  /// @notice Get latest round in which the asset has been updated
   function latestRound() external view returns (uint256) {
     return supraOracle.getRound(assetPriceIndex);
   }
 
+  /// @notice Not supported by Supra Oracle
   function getAnswer(uint256 roundId) external view returns (int256) {
     revert('Not supported by Supra');
   }
 
+  /// @notice Not supported by Supra Oracle
   function getTimestamp(uint256 roundId) external view returns (uint256) {
     revert('Not supported by Supra');
   }
 
-  function convertToUsd(uint256 price, uint8 _decimals) internal view returns (uint256) {
+  /// @notice Convert the price of the asset to USD as
+  function convertToUsd(uint256 price, uint256 _decimals) internal view returns (uint256) {
     // get usd price of the usdt
-    ISupraSValueFeed.derivedData memory derivedData = supraOracle.getSvalue(usdtUsdPriceIndex);
+    ISupraSValueFeed.priceFeed memory priceFeed = supraOracle.getSvalue(usdtUsdPriceIndex);
 
     // use the higher decimals of the two received
-    uint8 maxDecimals = _decimals > derivedData.decimals ? _decimals : derivedData.decimals;
-    uint256 usdtPrice = normalizeDecimals(
-      derivedData.derivedPrice,
-      derivedData.decimals,
-      maxDecimals
-    );
+    uint256 maxDecimals = _decimals > priceFeed.decimals ? _decimals : priceFeed.decimals;
+    uint256 usdtPrice = normalizeDecimals(priceFeed.price, priceFeed.decimals, maxDecimals);
 
     // convert the asset_usdt pair to asset_usd pair
     uint256 usdPrice = price * usdtPrice;
 
     // normalize the return to the contract defined decimals
-    return normalizeDecimals(usdPrice, maxDecimals, decimals);
+    return normalizeDecimals(usdPrice, maxDecimals, SafeCast.toUint8(decimals));
   }
 
+  /// @notice Shifts the pricing according to the difference in decimals
   function normalizeDecimals(
     uint256 price,
-    uint8 currentDecimals,
-    uint8 expectedDecimals
-  ) internal view returns (uint256) {
+    uint256 currentDecimals,
+    uint256 expectedDecimals
+  ) internal pure returns (uint256) {
     if (currentDecimals > expectedDecimals) {
       return price / (10 ** (currentDecimals - expectedDecimals));
     } else if (currentDecimals < expectedDecimals) {
