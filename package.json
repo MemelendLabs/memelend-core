@@ -83,7 +83,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/aave/aave-v3-core"
+    "url": "git://github.com/IntersectLabs/intersect-core"
   },
   "lint-staged": {
     "*.{ts,js,md,sol}": "prettier --write"
