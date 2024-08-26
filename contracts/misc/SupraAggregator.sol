@@ -33,7 +33,7 @@ contract SupraAggregator is Ownable, AggregatorInterface {
     supraOracle = ISupraSValueFeed(_supraOracle);
     assetPriceIndex = _assetPriceIndex;
     usdtUsdPriceIndex = _usdtUsdPriceIndex;
-    uint8 decimals = _decimals;
+    decimals = _decimals;
     tokenPair = _tokenPair;
   }
 
