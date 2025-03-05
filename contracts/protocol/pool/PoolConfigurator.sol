@@ -216,6 +216,8 @@ contract PoolConfigurator is VersionedInitializable, IPoolConfigurator {
     address asset,
     bool borrowable
   ) external override onlyRiskOrPoolAdmins {
+    revert (Errors.OPERATION_NOT_SUPPORTED);
+
     DataTypes.ReserveConfigurationMap memory currentConfig = _pool.getConfiguration(asset);
     currentConfig.setBorrowableInIsolation(borrowable);
     _pool.setConfiguration(asset, currentConfig);
@@ -269,6 +271,8 @@ contract PoolConfigurator is VersionedInitializable, IPoolConfigurator {
     address asset,
     bool newSiloed
   ) external override onlyRiskOrPoolAdmins {
+    revert (Errors.OPERATION_NOT_SUPPORTED);
+    
     if (newSiloed) {
       _checkNoBorrowers(asset);
     }
