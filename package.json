@@ -1,7 +1,7 @@
 {
   "name": "@aave/core-v3",
   "version": "1.19.4",
-  "description": "Aave Protocol V3 core smart contracts",
+  "description": "Memelend fork of Aave Protocol V3 core smart contracts",
   "files": [
     "contracts",
     "artifacts",
@@ -33,8 +33,8 @@
     "prepublish": "npm run compile && npm run build"
   },
   "devDependencies": {
-    "@aave/deploy-v3": "git+https://github.com/IntersectLabs/intersect-deploy",
-    "@aave/periphery-v3": "git+https://github.com/IntersectLabs/intersect-periphery",
+    "@aave/deploy-v3": "git+https://github.com/MemelendLabs/memelend-deploy",
+    "@aave/periphery-v3": "git+https://github.com/MemelendLabs/memelend-periphery",
     "@ethersproject/bignumber": "^5.6.2",
     "@nomicfoundation/hardhat-chai-matchers": "1.0.5",
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
@@ -83,7 +83,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/IntersectLabs/intersect-core"
+    "url": "git://github.com/MemelendLabs/memelend-core"
   },
   "lint-staged": {
     "*.{ts,js,md,sol}": "prettier --write"
